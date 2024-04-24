@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import Context from "../context/Context";
 import estiloDeslogueado from "../static/styles/deslogueado.module.css"
 
 function Deslogueado() {
 
+    const { crearUsuario, usuarioLogin } = useContext(Context);
     const [crear, setCrear] = useState(false);
     const [nombreUsuario, setNombreUsuario] = useState("");
     const [email, setEmail] = useState("");
