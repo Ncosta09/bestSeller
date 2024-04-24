@@ -1,0 +1,163 @@
+.allHomePage {
+    width: 100%;
+    /* height: calc(100vh - 130px); */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.homePage {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.medidas{
+    margin-top: 20px;
+    height: 360px;
+    width: 90%;
+    padding: 30px;
+}
+
+.presentation {
+    background-color: #F6F1EE;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.presentacionIn{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.presentacionImg{
+    margin-right: 20px;
+}
+
+.presentacionText{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.presentacionText h1{
+    font-size: 35px;
+}
+
+.presentacionText p{
+    height: 100%;
+    margin-top: 20px;
+    font-size: 22px;
+}
+
+.timeLine{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #6C5F5B;
+    border-radius: 10px;
+}
+
+.dibujoTimeline{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: #F6F1EE;
+}
+
+.timeLine h2{
+    font-size: 35px;
+    color: #F6F1EE;
+}
+
+.dibujoTimeline h3{
+    color: #ED7D31;
+    margin-bottom: 5px;
+}
+
+.dibujo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon{
+    border: 3px solid #ED7D31;
+    border-radius: 100%;
+    font-size: 35px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.line{
+    width: 100%;
+    height: 3px;
+    background-color: #ED7D31;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.dibujo p{
+    font-size: 20px;
+}
+
+.buy {
+    border-radius: 10px;
+    background: #e0e0e0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    margin-bottom: 20px;
+}
+
+.buyBox{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buyText{
+    height: 100%;
+}
+
+.descripcion{
+    width: 80%;
+    height: 50%;
+}
+
+.descripcion p{
+    margin-top: 10px;
+    font-size: 35px;
+}
+
+.buyBtn{
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.buyBtn button{
+    width: 120px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1.5px solid black;
+    background-color: #EFDC4F;
+    cursor: pointer;
+}

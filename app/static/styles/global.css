@@ -1,0 +1,11 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.background{
+    background-color: #EAEAEA;
+    max-width: 1200px;
+    margin: 0 auto;
+}
