@@ -19,7 +19,7 @@ function Header() {
                     <div className={estilosHeader.fullNav}>
                         <nav className={estilosHeader.navLink}>
                             <Link href="/" className={estilosHeader.link}>Inicio</Link>
-                            <Link href="/" className={estilosHeader.link}>Login</Link>
+                            <Link href="/deslogueado" className={estilosHeader.link}>Login</Link>
                             {/* <Link href="/" className={estilosHeader.link}>Mis compras</Link> */}
                         </nav>
                     </div>
