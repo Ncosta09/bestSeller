@@ -31,7 +31,7 @@ function UseContext(props) {
 
     const estadoInicial = { 
         usuario: {
-            // productosComprados: [],
+            productosComprados: [],
         },
         productos: [],
         estadoLogin: false
@@ -124,34 +124,36 @@ function UseContext(props) {
     //     });
     // }
 
-    // const comprarProducto = (nombreProducto) => {
-    //     console.log("Nombre producto: ", nombreProducto);
-    //     console.log("Nombre de usuario en sesion: ", auth.currentUser.displayName);
+    const comprarProducto = () => {
+        // console.log("Nombre producto: ", nombreProducto);
+        // console.log("Nombre de usuario en sesion: ", auth.currentUser.displayName);
         
-    //     if (auth.currentUser.displayName) {
-    //         dispatch({ type: 'COMPRAR_PRODUCTO', payload: nombreProducto });
-    //         const usuarioCompraRef = ref(db, `Usuarios/${auth.currentUser.uid}/productosComprados`);
-    //             update(usuarioCompraRef, { 
-    //                 estado: false,
-    //                 nombre: nombreProducto
-    //             })
-    //             .then(() => {
-    //                 console.log("Producto" + nombreProducto + "comprado con éxito.");
-    //             })
-    //             .catch((error) => {
-    //                 console.error("Error al comprar el producto:", error);
-    //             });
-    //     }
-    // }
+        if (auth?.currentUser?.displayName) {
+            dispatch({ type: 'COMPRAR_PRODUCTO', payload: auth.currentUser.uid });
+            const usuarioCompraRef = ref(db, `Usuarios/${auth.currentUser.uid}/productosComprados`);
+                update(usuarioCompraRef, { 
+                    estado: false,
+                })
+                .then(() => {
+                    console.log("Producto comprado con éxito.");
+                })
+                .catch((error) => {
+                    console.error("Error al comprar el producto:", error);
+                });
+        }else{
+            alert("Debes estar logueado para comprar el libro");
+        }
+    }
 
-    // const traerProductosComprados = () => {
-    //     const usuarioCompraRef = ref(db, `Usuarios/${auth?.currentUser?.uid}/productosComprados`);
-    //     onValue(usuarioCompraRef, (snapshot) => {
-    //         const data = snapshot.val();
-    //         dispatch({ type: 'VER_PRODUCTO_COMPRADO', payload: data });
-    //     });
+    const traerProductosComprados = () => {
+        const usuarioCompraRef = ref(db, `Usuarios/${auth?.currentUser?.uid}/productosComprados`);
+        onValue(usuarioCompraRef, (snapshot) => {
+            const data = snapshot.val();
+            // console.log("Data: ", data);
+            dispatch({ type: 'VER_PRODUCTO_COMPRADO', payload: data });
+        });
 
-    // }    
+    }
     
     return (<>
         <Contexto.Provider value={{ 
@@ -159,12 +161,12 @@ function UseContext(props) {
                 usuarioLogin, 
                 usuarioLogout, 
                 // traemeProductos, 
-                // comprarProducto, 
-                // traerProductosComprados, 
+                comprarProducto, 
+                traerProductosComprados, 
                 usuarioLogeado,
                 estadoLogin: state.estadoLogin,
                 // productos: state.productos, 
-                // productosComprados: state.productosComprados 
+                productosComprados: state.productosComprados
             }}> 
             {children} 
         </Contexto.Provider> 

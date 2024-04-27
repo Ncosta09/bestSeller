@@ -1,9 +1,32 @@
+"use client";
+import { useContext, useEffect } from "react";
+import Context from "./context/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faDownload, faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import estilosHome from "./static/styles/home.module.css"
 
+// const url = "https://fir-app-522e1-default-rtdb.firebaseio.com/Productos.json"
+// const pedidoDeProductos = () => {
+//   return fetch(url).then((res) => res.json());
+// }
+
 export default function Home() {
+
+  const { comprarProducto, traerProductosComprados, productosComprados, usuarioLogeado, estadoLogin } = useContext(Context);
+  // const traerProductosJson = await pedidoDeProductos();
+  // console.log(traerProductosJson);
+
+  useEffect(() => {
+    usuarioLogeado();
+    traerProductosComprados();
+  }, [estadoLogin]);
+
+  // console.log("producto: " + productosComprados?.estado);
+
+  const handleComprar = () => {
+    comprarProducto();
+  }
 
   return (
     <>
@@ -65,7 +88,10 @@ export default function Home() {
                   <p>Aprende a codear como un pro con Eloquent JavaScript!</p>
                 </div>
                 <div className={estilosHome.buyBtn}>
-                  <button>Comprar</button>
+                  {!productosComprados?.estado ? 
+                    <button onClick={() => handleComprar()}>Comprar</button> :
+                    <button onClick={() => handleDescargar()}>Descargar</button>
+                  }
                 </div>
               </div>
               <div>
