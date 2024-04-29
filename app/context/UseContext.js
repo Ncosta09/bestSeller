@@ -30,9 +30,8 @@ function UseContext(props) {
     // const refProductos = ref(db, 'Productos/');
 
     const estadoInicial = { 
-        usuario: {
-            productosComprados: [],
-        },
+        usuario: {},
+        productosComprados: [],
         productos: [],
         estadoLogin: false
     }
@@ -116,6 +115,14 @@ function UseContext(props) {
         });
     }
 
+    const usuarioAdmin = () => {
+        // console.log("Usuario: ", auth?.currentUser?.email);
+        const email = auth?.currentUser?.email;
+        if(email == "micucosta@gmail.com"){
+            return true;
+        }
+    }
+
     // const traemeProductos = () => {
     //     onValue(refProductos, (snapshot) => {
     //         const data = snapshot.val();
@@ -125,14 +132,16 @@ function UseContext(props) {
     // }
 
     const comprarProducto = () => {
-        // console.log("Nombre producto: ", nombreProducto);
+        // console.log("Auth: ", auth);
         // console.log("Nombre de usuario en sesion: ", auth.currentUser.displayName);
         
         if (auth?.currentUser?.displayName) {
             dispatch({ type: 'COMPRAR_PRODUCTO', payload: auth.currentUser.uid });
-            const usuarioCompraRef = ref(db, `Usuarios/${auth.currentUser.uid}/productosComprados`);
+            const usuarioCompraRef = ref(db, `ProductosComprados/${auth?.currentUser?.uid}`);
                 update(usuarioCompraRef, { 
-                    estado: false,
+                    nombre: auth?.currentUser?.displayName,
+                    uid: auth.currentUser.uid,
+                    estado: false
                 })
                 .then(() => {
                     console.log("Producto comprado con éxito.");
@@ -146,23 +155,58 @@ function UseContext(props) {
     }
 
     const traerProductosComprados = () => {
-        const usuarioCompraRef = ref(db, `Usuarios/${auth?.currentUser?.uid}/productosComprados`);
+        const usuarioCompraRef = ref(db, `ProductosComprados/${auth?.currentUser?.uid}`);
         onValue(usuarioCompraRef, (snapshot) => {
             const data = snapshot.val();
             // console.log("Data: ", data);
             dispatch({ type: 'VER_PRODUCTO_COMPRADO', payload: data });
         });
-
     }
+
+    const traerTodosProductosComprados = () => {
+        return new Promise((resolve, reject) => {
+            const productosCompradosRef = ref(db, 'ProductosComprados');
+            
+            onValue(productosCompradosRef, (snapshot) => {
+                const productosComprados = [];
+                snapshot.forEach((childSnapshot) => {
+                    productosComprados.push(childSnapshot.val());
+                });
+
+                resolve(productosComprados);
+            }, (error) => {
+                reject(error);
+            });
+        });
+    };    
+
+    const actualizarEstadoCompra = (userId, nuevoEstado) => {
+        // Realiza la actualización en la base de datos
+        const usuarioCompraRef = ref(db, `ProductosComprados/${userId}`);
+        update(usuarioCompraRef, { estado: nuevoEstado })
+          .then(() => {
+            dispatch({
+              type: 'ACTUALIZAR_ESTADO_USUARIO',
+              payload: { uid: userId, estado: nuevoEstado }
+            });
+            console.log("Estado del usuario actualizado con éxito.");
+          })
+          .catch((error) => {
+            console.error("Error al actualizar el estado del usuario:", error);
+          });
+    };
     
     return (<>
         <Contexto.Provider value={{ 
                 crearUsuario, 
                 usuarioLogin, 
                 usuarioLogout, 
+                usuarioAdmin,
                 // traemeProductos, 
                 comprarProducto, 
                 traerProductosComprados, 
+                traerTodosProductosComprados,
+                actualizarEstadoCompra,
                 usuarioLogeado,
                 estadoLogin: state.estadoLogin,
                 // productos: state.productos, 

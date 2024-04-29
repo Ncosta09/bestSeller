@@ -6,6 +6,7 @@ const USUARIO_NO_LOGUEADO = "USUARIO_NO_LOGUEADO";
 // const VER_PRODUCTO = "VER_PRODUCTO";
 const COMPRAR_PRODUCTO = "COMPRAR_PRODUCTO";
 const VER_PRODUCTO_COMPRADO = "VER_PRODUCTO_COMPRADO";
+const ACTUALIZAR_PRODUCTO_COMPRADO = "ACTUALIZAR_PRODUCTO_COMPRADO";
 
 export default function Reducer(state, action){
     const {payload, type} = action;
@@ -50,16 +51,27 @@ export default function Reducer(state, action){
         case COMPRAR_PRODUCTO:
             return {
                 ...state,
-                usuario: {
-                    ...state.usuario,
-                    productosComprados: [...state.usuario.productosComprados, payload]
-                }
+                productosComprados: {...state.productosComprados, payload}
             };
 
         case VER_PRODUCTO_COMPRADO:
             return {
                 ...state, 
                 productosComprados: payload
+            };
+
+        case ACTUALIZAR_PRODUCTO_COMPRADO:
+            const { uid, estado } = payload;
+            const nuevosProductosComprados = state.productosComprados.map(producto => {
+                if (producto.uid === uid) {
+                    return { ...producto, estado: estado };
+                }
+                return producto;
+            });
+
+            return {
+                ...state,
+                productosComprados: nuevosProductosComprados
             };
     }
 }

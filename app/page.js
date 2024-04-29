@@ -28,6 +28,10 @@ export default function Home() {
     comprarProducto();
   }
 
+  const handleDescargar = () => {
+    console.log("Descargar archivo.");
+  }
+
   return (
     <>
       <div className={estilosHome.allHomePage}>
