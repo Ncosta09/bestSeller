@@ -7,7 +7,7 @@ import estilosHeader from "../static/styles/header.module.css"
 
 function Header() {
 
-    const { usuarioLogout, usuarioLogeado, estadoLogin } = useContext(Context);
+    const { usuarioLogout, usuarioLogeado, estadoLogin, usuarioAdmin } = useContext(Context);
 
     const desloguear = () => {
         usuarioLogout();
@@ -16,6 +16,8 @@ function Header() {
     useEffect(() => {
         usuarioLogeado();
     }, []);
+
+    const email = usuarioAdmin();
 
     return ( 
         <>
@@ -35,6 +37,10 @@ function Header() {
                         <nav className={estilosHeader.navLink}>
                             <Link href="/" className={estilosHeader.link}>Inicio</Link>
                             {/* <Link href="/" className={estilosHeader.link}>Mis compras</Link> */}
+                            {email ? 
+                                <Link href="/administrador" className={estilosHeader.link}>Admin</Link> :
+                                ""
+                            }
                             {!estadoLogin ? 
                                 <Link href="/deslogueado" className={estilosHeader.link}>Login</Link> :
                                 <a onClick={desloguear} className={estilosHeader.link}>logout</a>

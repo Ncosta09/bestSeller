@@ -22,8 +22,9 @@ function Administrador() {
     }, []);
 
     const handleEstadoChange = async (userID, value) => {
-        console.log("valor y UID: ", value + " : " + userID);
-        await actualizarEstadoCompra(userID, value);
+        const estadoBooleano = JSON.parse(value); // Convertir la cadena a booleano
+        console.log("valor y UID: ", estadoBooleano + " : " + userID);
+        await actualizarEstadoCompra(userID, estadoBooleano);
         const nuevosProductosComprados = await traerTodosProductosComprados();
         setUsuarios(nuevosProductosComprados);
     }
@@ -40,21 +41,23 @@ function Administrador() {
                         <thead>
                             <tr>
                                 <th className={estilosAdmin.cabecera}>Nombre</th>
-                                <th className={estilosAdmin.cabecera}>Estado</th>
+                                <th className={estilosAdmin.cabecera}>Email</th>
                                 <th className={estilosAdmin.cabecera}>UID</th>
+                                <th className={estilosAdmin.cabecera}>Estado</th>
                             </tr>
                         </thead>
                         <tbody>
                             {usuarios.map((usuario, index) => (
                                 <tr key={index}>
                                     <td className={estilosAdmin.celda}>{usuario.nombre}</td>
+                                    <td className={estilosAdmin.celda}>{usuario.email}</td>
+                                    <td className={estilosAdmin.celda}>{usuario.uid}</td>
                                     <td className={estilosAdmin.celda}>
                                         <select className={estilosAdmin.estadoSelect} value={usuario.estado} onChange={(e) => handleEstadoChange(usuario.uid, e.target.value)}>
                                             <option value={true}>Activo</option>
                                             <option value={false}>Inactivo</option>
                                         </select>
                                     </td>
-                                    <td className={estilosAdmin.celda}>{usuario.uid}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -61,17 +61,8 @@ export default function Reducer(state, action){
             };
 
         case ACTUALIZAR_PRODUCTO_COMPRADO:
-            const { uid, estado } = payload;
-            const nuevosProductosComprados = state.productosComprados.map(producto => {
-                if (producto.uid === uid) {
-                    return { ...producto, estado: estado };
-                }
-                return producto;
-            });
 
             return {
-                ...state,
-                productosComprados: nuevosProductosComprados
             };
     }
 }

@@ -101,7 +101,11 @@ function UseContext(props) {
         signOut(auth).then(() => {
             dispatch({ type: 'LOGOUT_USUARIO', payload: null });
             console.log("Me desloguie");
-        }).catch((error) => {});
+        })
+        .then(() => {
+            router.push("/");
+        })
+        .catch((error) => {});
     }
 
     const usuarioLogeado = () => {
@@ -140,6 +144,7 @@ function UseContext(props) {
             const usuarioCompraRef = ref(db, `ProductosComprados/${auth?.currentUser?.uid}`);
                 update(usuarioCompraRef, { 
                     nombre: auth?.currentUser?.displayName,
+                    email: auth?.currentUser?.email,
                     uid: auth.currentUser.uid,
                     estado: false
                 })
@@ -181,14 +186,14 @@ function UseContext(props) {
     };    
 
     const actualizarEstadoCompra = (userId, nuevoEstado) => {
-        // Realiza la actualización en la base de datos
         const usuarioCompraRef = ref(db, `ProductosComprados/${userId}`);
+        console.log("estado: ", typeof nuevoEstado);
         update(usuarioCompraRef, { estado: nuevoEstado })
           .then(() => {
-            dispatch({
-              type: 'ACTUALIZAR_ESTADO_USUARIO',
-              payload: { uid: userId, estado: nuevoEstado }
-            });
+            // dispatch({
+            //   type: 'ACTUALIZAR_ESTADO_USUARIO',
+            //   payload: { uid: userId, estado: nuevoEstado }
+            // });
             console.log("Estado del usuario actualizado con éxito.");
           })
           .catch((error) => {

@@ -22,8 +22,6 @@ export default function Home() {
     traerProductosComprados();
   }, [estadoLogin]);
 
-  // console.log("producto: " + productosComprados?.estado);
-
   const handleComprar = () => {
     comprarProducto();
   }
@@ -92,7 +90,8 @@ export default function Home() {
                   <p>Aprende a codear como un pro con Eloquent JavaScript!</p>
                 </div>
                 <div className={estilosHome.buyBtn}>
-                  {!productosComprados?.estado ? 
+                  {/* {console.log("producto: " + typeof productosComprados?.estado)} */}
+                  {productosComprados?.estado == "false" || !productosComprados?.estado ? 
                     <button onClick={() => handleComprar()}>Comprar</button> :
                     <button onClick={() => handleDescargar()}>Descargar</button>
                   }
