@@ -1,34 +1,43 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Context from "./context/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faDownload, faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
+import { redirect, useRouter } from 'next/navigation';
 import Image from "next/image";
 import estilosHome from "./static/styles/home.module.css"
 
-// const url = "https://fir-app-522e1-default-rtdb.firebaseio.com/Productos.json"
-// const pedidoDeProductos = () => {
-//   return fetch(url).then((res) => res.json());
-// }
-
 export default function Home() {
-
   const { comprarProducto, traerProductosComprados, productosComprados, usuarioLogeado, estadoLogin } = useContext(Context);
-  // const traerProductosJson = await pedidoDeProductos();
-  // console.log(traerProductosJson);
+
+  const [redirectUrl, setRedirectUrl] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     usuarioLogeado();
     traerProductosComprados();
   }, [estadoLogin]);
 
-  const handleComprar = () => {
-    comprarProducto();
+  const handleComprar = async () => {
+    const response = await fetch('/api/createPreference', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+    setRedirectUrl(data.redirectUrl);
+  };
+
+  if (redirectUrl) {
+    router.push(redirectUrl);
+    return null; // Opcional: mostrar un mensaje de carga mientras se redirige
   }
 
   const handleDescargar = () => {
     console.log("Descargar archivo.");
-  }
+  };
 
   return (
     <>
@@ -90,10 +99,9 @@ export default function Home() {
                   <p>Aprende a codear como un pro con Eloquent JavaScript!</p>
                 </div>
                 <div className={estilosHome.buyBtn}>
-                  {/* {console.log("producto: " + typeof productosComprados?.estado)} */}
                   {productosComprados?.estado == "false" || !productosComprados?.estado ? 
-                    <button onClick={() => handleComprar()}>Comprar</button> :
-                    <button onClick={() => handleDescargar()}>Descargar</button>
+                    <button onClick={handleComprar}>Comprar</button> :
+                    <button onClick={handleDescargar}>Descargar</button>
                   }
                 </div>
               </div>
