@@ -1,6 +1,5 @@
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 
-// Configura Mercado Pago con tu access token
 const client = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN });
 
 export default async function handler(req, res) {
@@ -9,8 +8,8 @@ export default async function handler(req, res) {
       body: {
         items: [
           {
-            id: 'donacion',
-            title: 'Hola',
+            id: 'compra',
+            title: 'Eloquent JavaScript',
             quantity: 1,
             unit_price: 1000,
           }

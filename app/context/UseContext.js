@@ -136,27 +136,35 @@ function UseContext(props) {
     // }
 
     const comprarProducto = () => {
+
+
+
+ 
+
+
+
+
         // console.log("Auth: ", auth);
         // console.log("Nombre de usuario en sesion: ", auth.currentUser.displayName);
-        
-        if (auth?.currentUser?.displayName) {
-            dispatch({ type: 'COMPRAR_PRODUCTO', payload: auth.currentUser.uid });
-            const usuarioCompraRef = ref(db, `ProductosComprados/${auth?.currentUser?.uid}`);
-                update(usuarioCompraRef, { 
-                    nombre: auth?.currentUser?.displayName,
-                    email: auth?.currentUser?.email,
-                    uid: auth.currentUser.uid,
-                    estado: false
-                })
-                .then(() => {
-                    console.log("Producto comprado con éxito.");
-                })
-                .catch((error) => {
-                    console.error("Error al comprar el producto:", error);
-                });
-        }else{
-            alert("Debes estar logueado para comprar el libro");
-        }
+
+        // if (auth?.currentUser?.displayName) {
+        //     dispatch({ type: 'COMPRAR_PRODUCTO', payload: auth.currentUser.uid });
+        //     const usuarioCompraRef = ref(db, `ProductosComprados/${auth?.currentUser?.uid}`);
+        //         update(usuarioCompraRef, { 
+        //             nombre: auth?.currentUser?.displayName,
+        //             email: auth?.currentUser?.email,
+        //             uid: auth.currentUser.uid,
+        //             estado: false
+        //         })
+        //         .then(() => {
+        //             console.log("Producto comprado con éxito.");
+        //         })
+        //         .catch((error) => {
+        //             console.error("Error al comprar el producto:", error);
+        //         });
+        // }else{
+        //     alert("Debes estar logueado para comprar el libro");
+        // }
     }
 
     const traerProductosComprados = () => {
